@@ -1,0 +1,40 @@
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- A house, with the door as the hole.
+
+       The control fills in an address, and "address" reads as a house before it
+       reads as anything else. The pin was the first candidate and is not
+       available: pcf-geo-stamp owns it, and two pins in one gallery would be
+       one control twice. An envelope was the second and was rejected because
+       at 24px it reads as email, which is the wrong kind of address. A pin
+       over three list lines (the suggestions) was drawn and died on the sheet:
+       the lines merged into a smear at 32 and the pin read as geo-stamp with
+       a shadow.
+
+       One silhouette: the roof and the body are one path, filled and stroked
+       with the same paint so the eaves and the corners round. The door is the
+       interior in #F8FAFC, open at the bottom edge so it reads as a doorway
+       rather than a window; a window beside it was tried and at 24 became a
+       second, smaller door.
+
+       The ramp is the PCFHub mark's own, verbatim, so this sits in the family
+       rather than beside it. Declared in userSpaceOnUse and spanning the whole
+       96 canvas, so the mark reads as one object lit from the top right.
+
+       Drawn for 32px. The door is 16 wide on a 64-wide body: at 12 it closed
+       up at 24px, at 20 the house started to read as an arch.
+
+       Note: no double hyphen may appear in this comment, or the whole document
+       fails to parse as XML. -->
+  <defs>
+    <linearGradient id="address-autocomplete-azure-ramp" x1="6" y1="82" x2="90" y2="14" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A684FF"/><stop offset="0.6" stop-color="#7C86FF"/><stop offset="1" stop-color="#00BCFF"/>
+    </linearGradient>
+  </defs>
+  <!-- The silhouette: roof and body as one path, rounded by its own stroke. -->
+  <path d="M48 14 L82 44 L82 82 L14 82 L14 44 Z"
+        fill="url(#address-autocomplete-azure-ramp)"
+        stroke="url(#address-autocomplete-azure-ramp)"
+        stroke-width="8" stroke-linejoin="round"/>
+  <!-- The door, open at the bottom edge. -->
+  <path d="M40 86 L40 58 A8 8 0 0 1 56 58 L56 86 Z" fill="#F8FAFC"/>
+</svg>

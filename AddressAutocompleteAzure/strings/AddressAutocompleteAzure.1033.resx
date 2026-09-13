@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Display names and descriptions for everything declared in
+    ControlManifest.Input.xml. PCFHub reads the manifest, so these strings are
+    what appear in the component's API reference on the hub as well as in the
+    maker's properties pane.
+
+    Copy this file to add a language — AddressAutocompleteAzure.3082.resx for Spanish, and so
+    on — then list it under <resources> in the manifest.
+  -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="AddressAutocompleteAzure_Name" xml:space="preserve">
+    <value>Address Autocomplete (Azure Maps)</value>
+  </data>
+  <data name="AddressAutocompleteAzure_Desc" xml:space="preserve">
+    <value>Type an address, pick a suggestion, and every address column fills in — through Azure Maps.</value>
+  </data>
+  <data name="AddressLine1_Name" xml:space="preserve">
+    <value>Street</value>
+  </data>
+  <data name="AddressLine1_Desc" xml:space="preserve">
+    <value>The street line the control sits on. Typing writes it; picking a suggestion writes it and every other bound column.</value>
+  </data>
+  <data name="City_Name" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="City_Desc" xml:space="preserve">
+    <value>The column that receives the suggestion's city or town. Optional.</value>
+  </data>
+  <data name="StateOrProvince_Name" xml:space="preserve">
+    <value>State / province</value>
+  </data>
+  <data name="StateOrProvince_Desc" xml:space="preserve">
+    <value>The column that receives the state, province or region. Optional; see Region format.</value>
+  </data>
+  <data name="PostalCode_Name" xml:space="preserve">
+    <value>Postal code</value>
+  </data>
+  <data name="PostalCode_Desc" xml:space="preserve">
+    <value>The column that receives the postal or ZIP code. Optional.</value>
+  </data>
+  <data name="Country_Name" xml:space="preserve">
+    <value>Country / region</value>
+  </data>
+  <data name="Country_Desc" xml:space="preserve">
+    <value>The column that receives the country. Optional; see Country format.</value>
+  </data>
+  <data name="ResolveCoordinates_Name" xml:space="preserve">
+    <value>Fill latitude and longitude</value>
+  </data>
+  <data name="ResolveCoordinates_Desc" xml:space="preserve">
+    <value>After a pick, ask Azure Maps for the address's coordinates and write them to the bound Latitude and Longitude columns. One extra transaction per pick.</value>
+  </data>
+  <data name="Latitude_Name" xml:space="preserve">
+    <value>Latitude</value>
+  </data>
+  <data name="Latitude_Desc" xml:space="preserve">
+    <value>A floating-point column for the latitude. Optional; binding it or Longitude adds one geocoding call per pick.</value>
+  </data>
+  <data name="Longitude_Name" xml:space="preserve">
+    <value>Longitude</value>
+  </data>
+  <data name="Longitude_Desc" xml:space="preserve">
+    <value>A floating-point column for the longitude. Optional; binding it or Latitude adds one geocoding call per pick.</value>
+  </data>
+  <data name="SubscriptionKey_Name" xml:space="preserve">
+    <value>Azure Maps subscription key</value>
+  </data>
+  <data name="SubscriptionKey_Desc" xml:space="preserve">
+    <value>The shared key of an Azure Maps account. Anyone who can open the form designer can read it — use a dedicated account and restrict its CORS allowed origins to this organisation.</value>
+  </data>
+  <data name="Endpoint_Name" xml:space="preserve">
+    <value>Azure Maps endpoint</value>
+  </data>
+  <data name="Endpoint_Desc" xml:space="preserve">
+    <value>Which host to call: the public cloud, a geographic endpoint for data residency, or Azure Government.</value>
+  </data>
+  <data name="Endpoint_Public_Name" xml:space="preserve">
+    <value>Public (atlas.microsoft.com)</value>
+  </data>
+  <data name="Endpoint_US_Name" xml:space="preserve">
+    <value>United States (us.atlas.microsoft.com)</value>
+  </data>
+  <data name="Endpoint_EU_Name" xml:space="preserve">
+    <value>Europe (eu.atlas.microsoft.com)</value>
+  </data>
+  <data name="Endpoint_KR_Name" xml:space="preserve">
+    <value>Korea (kr.atlas.microsoft.com)</value>
+  </data>
+  <data name="Endpoint_BR_Name" xml:space="preserve">
+    <value>Brazil (br.atlas.microsoft.com)</value>
+  </data>
+  <data name="Endpoint_Gov_Name" xml:space="preserve">
+    <value>Azure Government (atlas.azure.us)</value>
+  </data>
+  <data name="CountryRegion_Name" xml:space="preserve">
+    <value>Restrict to country</value>
+  </data>
+  <data name="CountryRegion_Desc" xml:space="preserve">
+    <value>An ISO 3166-1 alpha-2 code, such as US or FR. Only addresses in that country are suggested. Leave empty for every country.</value>
+  </data>
+  <data name="BiasLatitude_Name" xml:space="preserve">
+    <value>Bias latitude</value>
+  </data>
+  <data name="BiasLatitude_Desc" xml:space="preserve">
+    <value>With Bias longitude, a point suggestions are ranked near. Leave both empty to rank globally.</value>
+  </data>
+  <data name="BiasLongitude_Name" xml:space="preserve">
+    <value>Bias longitude</value>
+  </data>
+  <data name="BiasLongitude_Desc" xml:space="preserve">
+    <value>With Bias latitude, a point suggestions are ranked near. Leave both empty to rank globally.</value>
+  </data>
+  <data name="RegionFormat_Name" xml:space="preserve">
+    <value>Region format</value>
+  </data>
+  <data name="RegionFormat_Desc" xml:space="preserve">
+    <value>How the state or province is written: its short code (WA) or its full name (Washington).</value>
+  </data>
+  <data name="RegionFormat_Short_Name" xml:space="preserve">
+    <value>Short code</value>
+  </data>
+  <data name="RegionFormat_Long_Name" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="CountryFormat_Name" xml:space="preserve">
+    <value>Country format</value>
+  </data>
+  <data name="CountryFormat_Desc" xml:space="preserve">
+    <value>How the country is written: its name (United States) or its ISO code (US).</value>
+  </data>
+  <data name="CountryFormat_Name_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="CountryFormat_ISO_Name" xml:space="preserve">
+    <value>ISO code</value>
+  </data>
+  <data name="MinCharacters_Name" xml:space="preserve">
+    <value>Characters before searching</value>
+  </data>
+  <data name="MinCharacters_Desc" xml:space="preserve">
+    <value>How many characters to wait for before asking Azure Maps. Unset means 3, which is what Azure recommends.</value>
+  </data>
+  <data name="MaxSuggestions_Name" xml:space="preserve">
+    <value>Suggestions</value>
+  </data>
+  <data name="MaxSuggestions_Desc" xml:space="preserve">
+    <value>How many suggestions to show, 1 to 20. Unset means 5.</value>
+  </data>
+  <data name="Placeholder_Name" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="Placeholder_Desc" xml:space="preserve">
+    <value>Hint text shown while the field is empty.</value>
+  </data>
+  <data name="FormattedAddress_Name" xml:space="preserve">
+    <value>Formatted address</value>
+  </data>
+  <data name="FormattedAddress_Desc" xml:space="preserve">
+    <value>The picked address as one line, as Azure Maps formats it. Empty until a suggestion is picked.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_NoAccess" xml:space="preserve">
+    <value>You do not have access to this value.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_Placeholder" xml:space="preserve">
+    <value>Start typing an address</value>
+  </data>
+  <data name="AddressAutocompleteAzure_Searching" xml:space="preserve">
+    <value>Searching…</value>
+  </data>
+  <data name="AddressAutocompleteAzure_NoMatches" xml:space="preserve">
+    <value>No addresses match</value>
+  </data>
+  <data name="AddressAutocompleteAzure_TypeMore" xml:space="preserve">
+    <value>Type at least {0} characters</value>
+  </data>
+  <data name="AddressAutocompleteAzure_NoKey" xml:space="preserve">
+    <value>No Azure Maps key is set on this control, so it cannot suggest addresses.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_Clear" xml:space="preserve">
+    <value>Clear address</value>
+  </data>
+  <data name="AddressAutocompleteAzure_KeyRefused" xml:space="preserve">
+    <value>Azure Maps refused the key.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_OriginRefused" xml:space="preserve">
+    <value>Azure Maps refused this site. Allow it in the account's CORS settings.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_RateLimited" xml:space="preserve">
+    <value>Azure Maps is rate limiting requests; try again shortly.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_ServiceError" xml:space="preserve">
+    <value>Azure Maps returned an error ({0}).</value>
+  </data>
+  <data name="AddressAutocompleteAzure_Unreachable" xml:space="preserve">
+    <value>Azure Maps could not be reached.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_TimedOut" xml:space="preserve">
+    <value>Azure Maps did not answer in time.</value>
+  </data>
+  <data name="AddressAutocompleteAzure_NoCoordinates" xml:space="preserve">
+    <value>The address was saved, but Azure Maps returned no coordinates for it.</value>
+  </data>
+</root>

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+
+  "slug": "pcf-address-autocomplete-azure",
+  "name": "Address Autocomplete (Azure Maps)",
+  "tagline": "Type an address, pick a suggestion, and every address column fills in — through Azure Maps.",
+  "category": "pickers",
+  "tags": ["address", "azure-maps", "autocomplete", "geocoding", "premium"],
+
+  "control": {
+    "namespace": "PCFHub",
+    "constructor": "AddressAutocompleteAzure",
+    "type": "virtual",
+    "framework": "react_virtual",
+    "manifestPath": "AddressAutocompleteAzure/ControlManifest.Input.xml"
+  },
+
+  "links": {
+    "homepage": "https://github.com/pcfhub/pcf-address-autocomplete-azure",
+    "support": "https://github.com/pcfhub/pcf-address-autocomplete-azure/issues",
+    "license": "MIT"
+  },
+
+  "docs": {
+    "path": "docs"
+  },
+
+  "media": {
+    "logo": "media/logo.png",
+    "screenshots": [
+      "media/screenshot.png",
+      "media/screenshot-filled.png",
+      "media/screenshot-refused.png",
+      "media/screenshot-nokey.png"
+    ]
+  },
+
+  "demo": {
+    "fidelity": "limited",
+    "bundle": "out/controls/AddressAutocompleteAzure/bundle.js",
+    "styles": [
+      "out/controls/AddressAutocompleteAzure/css/AddressAutocompleteAzure.css"
+    ],
+    "limitations": [
+      "No suggestions appear here, and that is the whole feature. Suggesting means calling Azure Maps with a subscription key, and the demo has no key to hold and no account to bill — so the control is shown with the key left empty, which is exactly what it does on a form where the key is missing: it says so under the field, accepts typing into the street column, and makes no request. Screenshots above show the list, a pick and a refusal, captured from the dev rig in this repository against a stand-in for Azure Maps.",
+      "Every state that never leaves the browser is real here: typing writes the street column, Clear empties it and reports the clear, the other columns show under the field when the preset fills them, and the disabled, hidden, no-access and business-rule-error states are all reachable from the presets.",
+      "This is a premium control. The manifest declares external-service-usage for atlas.microsoft.com and its geographic and Government endpoints, so an app containing it needs Power Apps licences for its users. The demo does not change that and cannot show it."
+    ],
+    "presets": [
+      {
+        "slug": "unconfigured",
+        "name": "No key yet",
+        "description": "The control as it installs: no subscription key, so it explains itself under the field and behaves as a text box for the street.",
+        "props": {
+          "addressLine1": "",
+          "subscriptionKey": ""
+        }
+      },
+      {
+        "slug": "filled",
+        "name": "An address on the record",
+        "description": "What a pick leaves behind: the street in the field, the other columns as one line under it, and Clear to empty all of them.",
+        "props": {
+          "addressLine1": "1 Microsoft Way",
+          "city": "Redmond",
+          "stateOrProvince": "WA",
+          "postalCode": "98052",
+          "country": "United States",
+          "latitude": 47.64203,
+          "longitude": -122.13707,
+          "subscriptionKey": ""
+        }
+      }
+    ]
+  }
+}

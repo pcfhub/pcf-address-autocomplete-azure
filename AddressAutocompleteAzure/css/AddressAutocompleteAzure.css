@@ -1,0 +1,213 @@
+/*
+ * Every rule is scoped under the control's own class.
+ *
+ * A code component shares a document with the host app and with every other
+ * control on the form, so a bare `input { … }` here restyles the page it was
+ * dropped onto. The platform does not sandbox this for you.
+ *
+ * The palette is Fluent's design tokens with literal fallbacks. The control
+ * mounts its own `FluentProvider`, which emits the tokens as CSS custom
+ * properties — the host's theme where `context.fluentDesignLanguage` carries
+ * one, the web light theme otherwise — so the `var()`s below always resolve;
+ * the fallbacks carry the hub's demo harness and any host that strips them.
+ *
+ * The shape follows `pcf-lookup-search`, which follows the platform's own
+ * lookup: one bordered field, the actions inside the border, the dropdown as
+ * wide as the field.
+ */
+
+.AddressAutocompleteAzure {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    /* FluentProvider paints its theme's canvas colour by default, which on a
+       form section reads as a box drawn around the control. */
+    background-color: transparent;
+    font-family: var(--fontFamilyBase, "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif);
+    font-size: var(--fontSizeBase300, 14px);
+    line-height: var(--lineHeightBase300, 20px);
+    color: var(--colorNeutralForeground1, #242424);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-field {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    box-sizing: border-box;
+    min-height: 32px;
+    padding: 0 2px 0 8px;
+    border: 1px solid var(--colorNeutralStroke1, #d1d1d1);
+    border-radius: var(--borderRadiusMedium, 4px);
+    background-color: var(--colorNeutralBackground1, #ffffff);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-field:focus-within {
+    border-color: var(--colorCompoundBrandStroke, #0f6cbd);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-field--disabled {
+    background-color: var(--colorNeutralBackgroundDisabled, #f0f0f0);
+    border-color: var(--colorNeutralStrokeDisabled, #e0e0e0);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-field--invalid {
+    border-color: var(--colorPaletteRedBorder2, #b10e1c);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    color: var(--colorNeutralForeground3, #616161);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-field--disabled .AddressAutocompleteAzure-icon {
+    color: var(--colorNeutralForegroundDisabled, #bdbdbd);
+}
+
+/*
+ * The Combobox sits inside the field's border rather than drawing its own.
+ * `min-width: 0` because a flex item defaults to `min-width: auto`, which
+ * floors it at its content width and pushes the clear button out of a
+ * narrow form section.
+ */
+.AddressAutocompleteAzure .AddressAutocompleteAzure-combobox {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    background-color: transparent;
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-combobox::after {
+    display: none;
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-busy {
+    flex: 0 0 auto;
+    margin-inline-end: 4px;
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: var(--borderRadiusSmall, 2px);
+    background: none;
+    cursor: pointer;
+    color: var(--colorNeutralForeground2, #424242);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-action:hover {
+    background-color: var(--colorNeutralBackground1Hover, #f5f5f5);
+    color: var(--colorNeutralForeground1, #242424);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-action:focus-visible {
+    outline: 2px solid var(--colorStrokeFocus2, #000000);
+    outline-offset: -2px;
+}
+
+/*
+ * The other columns, under the field. A pick is a pick of an address; the
+ * field shows the street, and this line shows what else landed, so a reader
+ * does not open four other fields to check.
+ */
+.AddressAutocompleteAzure .AddressAutocompleteAzure-secondary {
+    margin: 4px 0 0;
+    padding-inline-start: 8px;
+    font-size: var(--fontSizeBase200, 12px);
+    line-height: var(--lineHeightBase200, 16px);
+    color: var(--colorNeutralForeground3, #616161);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*
+ * The listbox is portalled outside the control's root, so these are not
+ * nested under `.AddressAutocompleteAzure` — the class is on the listbox
+ * itself and still namespaced.
+ *
+ * `max-height` with a FLOOR. A viewport-relative cap reads as "most of the
+ * screen" and is a fraction of whatever box the control was handed: PCFHub's
+ * demo frame is sized to the control's resting height, 68px for a field, so
+ * `50vh` there is 34px and a list is a sliver. The `max()` keeps room for
+ * five rows whatever the frame.
+ */
+.AddressAutocompleteAzure-listbox {
+    max-height: max(240px, min(50vh, 400px));
+}
+
+.AddressAutocompleteAzure-listbox .AddressAutocompleteAzure-option {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.AddressAutocompleteAzure-listbox .AddressAutocompleteAzure-option-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.AddressAutocompleteAzure-listbox .AddressAutocompleteAzure-option-rest {
+    font-size: var(--fontSizeBase200, 12px);
+    color: var(--colorNeutralForeground3, #616161);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.AddressAutocompleteAzure-listbox .AddressAutocompleteAzure-notice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    color: var(--colorNeutralForeground2, #424242);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-message {
+    margin: 4px 0 0;
+    font-size: var(--fontSizeBase200, 12px);
+    line-height: var(--lineHeightBase200, 16px);
+    color: var(--colorNeutralForeground3, #616161);
+}
+
+.AddressAutocompleteAzure .AddressAutocompleteAzure-message--error {
+    color: var(--colorPaletteRedForeground1, #b10e1c);
+}
+
+/* Present for assistive technology, absent for the eye. */
+.AddressAutocompleteAzure .AddressAutocompleteAzure-live {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* The denied-read message renders without the FluentProvider wrapper. */
+.AddressAutocompleteAzure-message {
+    margin: 0;
+    font-size: var(--fontSizeBase200, 12px);
+    color: var(--colorNeutralForeground3, #616161);
+}
+
+@media (forced-colors: active) {
+    .AddressAutocompleteAzure .AddressAutocompleteAzure-field {
+        border-color: ButtonText;
+    }
+
+    .AddressAutocompleteAzure .AddressAutocompleteAzure-action:focus-visible {
+        outline-color: Highlight;
+    }
+}
