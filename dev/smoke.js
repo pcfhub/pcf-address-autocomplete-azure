@@ -800,6 +800,43 @@ check(
     echoed.update({ value: 'From the form' }).props.value === 'From the form',
 );
 
+/*
+ * **Echoes arrive out of order, and the sequence below is the one measured.**
+ * On a real Accounts form (2026-09-13) typing produced passes carrying
+ * "pase laur", then "pase lau", then "pase laur": the echo of an earlier
+ * keystroke landed after a later one. A guard that knows only the last write
+ * adopted the stale echo and the last character typed vanished — which is
+ * what a fast typist reported. Every recent write is an echo now.
+ */
+const raced = mount({ value: '' });
+
+raced.props().onType('pase lau');
+raced.props().onType('pase laur');
+
+const stale = raced.update({ value: 'pase lau' });
+
+check(
+    'a late echo of an earlier keystroke does not overwrite what was typed since',
+    stale.props.value === 'pase laur' && raced.outputs().addressLine1 === 'pase laur',
+    `props ${JSON.stringify(stale.props.value)}, output ${JSON.stringify(raced.outputs().addressLine1)}`,
+);
+
+check(
+    'and the form still wins with a value the control never wrote',
+    raced.update({ value: 'Set by a script' }).props.value === 'Set by a script',
+);
+
+/*
+ * `security` on a column with no field-level security profile arrived as
+ * `{ secured: false, editable: true, readable: true }` on the measured form —
+ * an object, where the template's rig models `undefined`. Both are hosts; a
+ * control has to read either as "readable and editable".
+ */
+check(
+    'an unsecured column reported as an object, not undefined, is readable and editable',
+    mount({ security: 'unsecured' }).props().readable === true && mount({ security: 'unsecured' }).props().disabled === false,
+);
+
 /* ------------------------------------------------- the states a form sets */
 
 check(

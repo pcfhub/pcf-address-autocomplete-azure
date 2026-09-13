@@ -18,41 +18,55 @@ nothing under "address" or "azure maps".
 
 ## Not verified
 
-**Nothing in this repository has been on a real form or against the real
-Azure Maps service.** Every shape below is from Microsoft Learn (read
-2026-09-13) or from the rig, and the rig is written from the same reading.
-The control is built to work either way where it can, and the first release
-carries this list rather than a claim.
+The shapes below were from Microsoft Learn (read 2026-09-13) and from a rig
+written to the same reading, until **the 0.0.1 probe build went on a real
+Accounts form with a real Azure Maps key on 2026-09-13** and answered most of
+them. Each item carries what came back; what is still open says so.
 
 Load-bearing, in the order a probe should ask them:
 
 1. **Do the six optional bound columns persist on save when only the street
    column is on the form?** The design assumes a bound property writes to
-   its column whether or not another control on the form shows it. If it
-   does not, `docs/model-driven.md` has to say the six must be on the form.
+   its column whether or not another control on the form shows it. *Open.*
+   The probe form had all six bound and the pick wrote all six — the
+   street, city, region, postal code and country in one pass and the two
+   coordinates on the next — but whether those columns were also placed on
+   the form was not recorded.
 2. **What does an unmapped optional bound property look like in
    `context.parameters`** — present with `raw: null`? `attributes`
    undefined? — and **does emitting `null` for it throw, no-op, or write?**
-   This is what `getOutputs`'s omission rule protects against; if the
-   platform tolerates `null` on an unmapped picker, the rule can relax.
+   *Half measured.* Every bound property on the probe form arrived as a full
+   property object with fifteen keys — `type`, `raw`, `formatted`,
+   `attributes` (`LogicalName`, `DisplayName`), `error`, `errorMessage`,
+   `errorCode`, `notifications`, `security`, `isPropertyLoading`,
+   `predicted`, `predictionCitation`, `citationData`, `isMasked`,
+   `isControlLoading` — with `latitude` and `longitude` at `raw: null`,
+   `type: 'FP'`. All seven were *mapped*; an unmapped one has not been looked
+   at, so the omission rule in `getOutputs` stays.
 3. **Does `null` on a mapped, previously-empty column clear or no-op?** The
    control emits `null` only for a column it has written; a pick that lands
-   a `null` (no region) on an empty column is the case.
+   a `null` (no region) on an empty column is the case. *Open.*
 4. **Does the browser's CORS preflight from `https://<org>.crm.dynamics.com`
    pass** with the account's default CORS (all origins) and with the key in a
-   header rather than the URL? The header makes the request non-simple, so
-   the preflight is the first thing the service sees.
+   header rather than the URL? *Measured: yes.* Every request was a 204
+   preflight followed by a 200 `fetch` of 0.5–0.7 kB, in 84–270 ms.
+   Superseded requests show as `(canceled)` — the `AbortController`
+   working.
 5. **Is `geometry` really `null` on autocomplete**, and does `geocode` return
    `features[0].geometry.coordinates` as `[lon, lat]` for a picked
-   `formattedAddress`? The reference sample says both; a live answer would
-   let the coordinates come from the first call and save the second.
+   `formattedAddress`? *Measured: yes on both.* `geometry: null` on every
+   one of five features; the geocode call on the pick wrote
+   `latitude=20.75712, longitude=-103.44046` one pass after the address
+   columns. The second call is needed, and it works.
 6. **Does the form designer offer `address1_latitude` on the coordinate type
-   group** (FP + Decimal)? `pcf-geo-stamp` measured that Decimal alone did
-   not; the group is copied from it.
+   group** (FP + Decimal)? *Measured: yes* — both were bound and arrived as
+   `type: 'FP'`.
 7. **Does the platform echo the value back through `updateView` after every
-   `notifyOutputChanged`** with the same shape the harness models? The
-   component's echo guard exists because the harness does, and the harness
-   was written to what the class already assumed.
+   `notifyOutputChanged`?** *Measured: yes, and out of order.* Every
+   keystroke produced a pass carrying the value just written, and the log
+   shows `"pase laur"` (pass 58), `"pase lau"` (59), `"pase laur"` (60) —
+   a late echo of an earlier keystroke after a later one. See *What building
+   it found*.
 8. **`Accept-Language: navigator.language`** — does the service honour it,
    and does a model-driven form's browser language match the user's Dataverse
    language often enough for this to be the right signal?
@@ -119,6 +133,26 @@ that.
 
 ## What building it found
 
+- **Echoes arrive out of order, and a last-value guard loses keystrokes.**
+  Reported from the form as "if I type fast the field cleans the last
+  characters; if I type slowly it works", and visible in the probe log as
+  passes 58–60 above. The class compared the incoming value with the *last*
+  write only, so a stale echo read as a form-driven change and was adopted
+  over the newer text. The class now remembers its last 32 writes per
+  column; an incoming value among them is an echo whatever its order, and a
+  value it never wrote is the form's and resets the memory. The suite
+  reproduces the measured sequence, and the assertion fails without the fix.
+- **`security` is an object on a column with no profile** — `{ secured:
+  false, editable: true, readable: true }` on every one of the seven, where
+  the template's rig models `undefined`. Both shapes are hosts now: the rig
+  has `security: 'unsecured'` and the suite asserts it reads as writable.
+- **Non-US `adminDistricts` carry `name` only.** A Mexican address arrived
+  as `[{ name: 'México' }, { name: 'Zumpango' }]` with no `shortName`; the
+  parser's fall-through wrote the name under the short format, which is
+  right. And `formattedAddress` orders the number after the street (`Calle
+  Paseo Laurel 37, …`) while `addressLine` is `37 Calle Paseo Laurel`, so the
+  option's second line shows the whole formatted address for such countries
+  rather than a remainder.
 - **The platform's echo closes the dropdown, and the class's echo guard is
   not enough.** The first harness walk showed suggestions but never the
   "type at least 3 characters" or "Searching…" notices. Every keystroke's

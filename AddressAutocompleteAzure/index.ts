@@ -73,6 +73,32 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
     /** The columns this control has written or cleared; see the class comment. */
     private written = new Set<Column>();
 
+    /**
+     * The last values this control wrote, per column — not only the last one.
+     *
+     * **The platform echoes writes back out of order.** Measured on a real
+     * Accounts form, 2026-09-13: typing "pase laur" produced passes carrying
+     * `"pase laur"`, then `"pase lau"`, then `"pase laur"` — the echo of an
+     * earlier keystroke arriving after a later one. A guard that recognises
+     * only the most recent write reads that late echo as a form-driven change,
+     * adopts it, and the last character typed disappears — which is exactly
+     * what a fast typist saw. So every recent write is remembered, bounded,
+     * and an incoming value that matches any of them is an echo. A value the
+     * control never wrote is the form's, and clears the memory for that
+     * column: the platform is authoritative from there.
+     */
+    private recentWrites: Record<Column, unknown[]> = {
+        addressLine1: [],
+        city: [],
+        stateOrProvince: [],
+        postalCode: [],
+        country: [],
+        latitude: [],
+        longitude: [],
+    };
+
+    private static readonly ECHO_MEMORY = 32;
+
     private formattedAddress = '';
 
     public init(
@@ -88,13 +114,14 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
         probe(context, () => this.getOutputs()); // TEMPORARY 0.0.1 — delete with probe.ts before 0.1.0
         const parameters = context.parameters;
 
-        // Adopt every column the platform changed, and only those.
+        // Adopt every column the platform changed — and only a change that is
+        // not an echo of something this control wrote. See `recentWrites`.
         (['addressLine1', 'city', 'stateOrProvince', 'postalCode', 'country'] as TextColumn[]).forEach((column) => {
             const incoming = parameters[column].raw ?? null;
 
             if (incoming !== this.lastIncoming[column]) {
                 this.lastIncoming[column] = incoming;
-                this.values[column] = incoming === '' ? null : incoming;
+                this.adopt(column, incoming === '' ? null : incoming);
             }
         });
 
@@ -103,7 +130,7 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
 
             if (incoming !== this.lastIncoming[column]) {
                 this.lastIncoming[column] = incoming;
-                this.values[column] = incoming;
+                this.adopt(column, incoming);
             }
         });
 
@@ -293,6 +320,29 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
     private write(column: Column, value: string | number | null): void {
         this.values[column] = value;
         this.written.add(column);
+
+        const recent = this.recentWrites[column];
+
+        recent.push(value);
+
+        if (recent.length > AddressAutocompleteAzure.ECHO_MEMORY) {
+            recent.shift();
+        }
+    }
+
+    /**
+     * A value the platform handed down: an echo of one of this control's own
+     * recent writes is ignored, whatever order it arrived in; anything else is
+     * the form's and wins, and from then on the memory for that column starts
+     * again.
+     */
+    private adopt(column: Column, incoming: string | number | null): void {
+        if (this.recentWrites[column].includes(incoming)) {
+            return;
+        }
+
+        this.recentWrites[column] = [];
+        this.values[column] = incoming;
     }
 
     private emit(column: Column): string | number | undefined {

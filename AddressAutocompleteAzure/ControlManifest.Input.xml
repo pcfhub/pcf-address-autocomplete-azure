@@ -7,7 +7,7 @@
   -->
   <control namespace="PCFHub"
            constructor="AddressAutocompleteAzure"
-           version="0.0.1"
+           version="0.0.2"
            display-name-key="AddressAutocompleteAzure_Name"
            description-key="AddressAutocompleteAzure_Desc"
            control-type="virtual">

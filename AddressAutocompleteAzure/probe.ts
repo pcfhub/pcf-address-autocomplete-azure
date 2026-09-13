@@ -16,7 +16,7 @@ import { IInputs } from './generated/ManifestTypes';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-const TAG = '[address-autocomplete probe 0.0.1]';
+const TAG = '[address-autocomplete probe 0.0.2]';
 const COLUMNS = ['addressLine1', 'city', 'stateOrProvince', 'postalCode', 'country', 'latitude', 'longitude'] as const;
 
 let reported = false;

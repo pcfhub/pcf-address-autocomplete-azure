@@ -116,6 +116,12 @@
      */
     var SECURITY = {
         none: undefined,
+        /*
+         * What the measured form actually handed down for a column with no
+         * profile (Accounts, 2026-09-13): an object with `secured: false`,
+         * not `undefined`. Both shapes are real hosts, so both are here.
+         */
+        unsecured: { editable: true, readable: true, secured: false },
         'read-only': { editable: false, readable: true, secured: true },
         'no-access': { editable: false, readable: false, secured: true },
     };
