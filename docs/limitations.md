@@ -66,10 +66,13 @@ Each optional column is its own picker in the form designer. That is how the
 platform exposes additional bound properties, and there is no way to collapse
 them. A column left unbound is simply not written.
 
-## Not yet confirmed on a live form
+## What has been confirmed on a live form
 
-This release has been driven end to end against a stand-in for Azure Maps
-and the platform. What a real environment still has to confirm is listed in
-the repository's `SPEC.md`, and includes whether a bound column that is not
-placed on the form itself persists on save, and the CORS preflight from a
-real organisation URL.
+The first release was driven on a real Accounts form with a real Azure Maps
+key before it was tagged: the CORS preflight from the organisation URL passes
+with the account's default settings and the key in a header; a bound column
+removed from the form still persists on save; a picker left empty is never
+written; and a pick with coordinates on writes latitude and longitude one
+request later. Geographic endpoints, Azure Government and canvas apps have
+not been exercised against the service; the repository's `SPEC.md` keeps the
+list.

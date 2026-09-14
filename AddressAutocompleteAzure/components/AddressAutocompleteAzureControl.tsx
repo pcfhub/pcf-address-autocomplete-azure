@@ -285,7 +285,9 @@ export function AddressAutocompleteAzureControl(props: IProps): React.ReactEleme
             return;
         }
 
-        const line = picked.addressLine || picked.formattedAddress;
+        // The street, or nothing: a town has no street line, and the field
+        // shows what the column will hold. The line under it carries the rest.
+        const line = picked.addressLine;
 
         typed.current = false;
         echo.current = line;

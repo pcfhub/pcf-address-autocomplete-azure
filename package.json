@@ -1,6 +1,6 @@
 {
   "name": "pcf-address-autocomplete-azure",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Type an address, pick a suggestion, and every address column fills in — through Azure Maps.",
   "license": "MIT",
   "private": true,

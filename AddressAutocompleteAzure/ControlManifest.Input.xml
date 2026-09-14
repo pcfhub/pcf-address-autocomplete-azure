@@ -7,7 +7,7 @@
   -->
   <control namespace="PCFHub"
            constructor="AddressAutocompleteAzure"
-           version="0.0.2"
+           version="0.1.0"
            display-name-key="AddressAutocompleteAzure_Name"
            description-key="AddressAutocompleteAzure_Desc"
            control-type="virtual">
@@ -65,12 +65,15 @@
 
       Only `addressLine1` is required. A maker who binds nothing else gets a
       street-line type-ahead that writes one column, which is a working
-      control rather than a broken one. Which of the six are *mapped* is not
-      visible from inside the control — an unmapped optional bound property
-      and a mapped-but-empty one read the same — so `getOutputs()` emits a key
-      only for a column it has a value for or has cleared after the platform
-      supplied one. See `index.ts`, and SPEC.md for what the form has and has
-      not confirmed about that.
+      control rather than a broken one. Which of the six are *mapped* is
+      visible from inside the control, and it was measured rather than
+      assumed: an unmapped optional bound property arrives with `type: null`
+      and empty `attributes` and `security` objects, where a mapped one
+      carries the column's metadata — so an unmapped column is never written
+      and never emitted, and a mapped one is emitted only once this control
+      has written or cleared it. See `index.ts` and SPEC.md. The six need
+      binding, not placing: a bound column removed from the form still
+      persists on save (measured).
 
       `latitude` and `longitude` are on a type group because Dataverse's
       `address1_latitude` / `address1_longitude` are Double, which the manifest
@@ -116,11 +119,12 @@
     <!--
       The coordinates cost a second transaction per pick — `geocode:autocomplete`
       promises no position, so `geocode` is called with the picked address —
-      and whether the maker bound the two columns below is not something the
-      control can see. So the call is a switch, off by default: a TwoOptions
-      input cannot be defaulted to on, which here is the right way round, and
-      a maker who binds latitude and longitude turns it on having read what it
-      buys. Bound but switched off, the two columns are left as they are.
+      and a second transaction is a cost the maker should choose rather than
+      inherit from having bound a column. So the call is a switch, off by
+      default: a TwoOptions input cannot be defaulted to on, which here is the
+      right way round, and a maker who binds latitude and longitude turns it
+      on having read what it buys. Bound but switched off, the two columns
+      are left as they are; on but unbound, nothing is written.
     -->
     <property name="resolveCoordinates"
               display-name-key="ResolveCoordinates_Name"

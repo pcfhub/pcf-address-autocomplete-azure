@@ -87,6 +87,20 @@
             formattedAddress: 'Rue de Rivoli, Paris, Île-de-France, France',
             position: { latitude: 48.8606, longitude: 2.3376 },
         },
+        // A town, not a street: no addressLine, no streetName, no postal code.
+        // Measured 2026-09-13 as the shape a locality-level pick arrives in.
+        {
+            addressLine: '',
+            streetNumber: '',
+            streetName: '',
+            city: 'Tlaltenango de Sánchez Román',
+            region: { name: 'Zacatecas', shortName: '' },
+            postalCode: '',
+            countryIso: 'MX',
+            countryName: 'México',
+            formattedAddress: 'Tlaltenango de Sánchez Román, Zacatecas, México',
+            position: { latitude: 21.78242, longitude: -103.30577 },
+        },
         // Geocodes to nothing: the pick lands, the coordinates do not.
         {
             addressLine: '10 Unmapped Lane',

@@ -34,8 +34,13 @@ so the column stays an ordinary text column that can also be typed into.
 
 The other parts are shown as one line under the field after a pick, so a
 reader sees the whole address land without opening the other fields. Those
-fields can stay on the form beside the control, or be left off it: the
-values are written to the record either way.
+fields can stay on the form beside the control, or be left off it: a bound
+column is written to the record either way, and a picker left empty is
+simply never written.
+
+A suggestion that is a town or a region rather than a street — Azure Maps
+offers them when what you type matches one — fills the city, region and
+country and leaves the street empty, because it has none.
 
 ## Column types
 

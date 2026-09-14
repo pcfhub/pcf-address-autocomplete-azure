@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { IInputs, IOutputs } from './generated/ManifestTypes';
 import { AddressAutocompleteAzureControl, IProps, IStrings } from './components/AddressAutocompleteAzureControl';
-import { probe } from './probe'; // TEMPORARY 0.0.1 — delete with probe.ts before 0.1.0
 import {
     autocompleteUrl,
     Fault,
@@ -27,16 +26,18 @@ type Column = TextColumn | CoordinateColumn;
 /**
  * An address type-ahead over Azure Maps, writing into seven bound columns.
  *
- * **What is bound is not visible from in here, and that shapes `getOutputs`.**
- * Only `addressLine1` is required; the other six are optional bound
- * properties, and an optional bound property the maker never mapped reads
- * exactly like a mapped one whose column is empty — `raw` is `null` either
- * way. `pcf-geo-stamp` met the same thing with its two coordinate columns
- * and settled the rule this class follows: **emit a key only for a column
- * the control has written**, where "written" means a pick or a clear put a
- * value there or took one away. A column the platform handed a value and the
- * control never touched is not in the outputs at all, so nothing is asserted
- * about a picker the maker may have left empty.
+ * **Which columns are bound is visible from in here — measured — and it
+ * shapes `getOutputs`.** Only `addressLine1` is required; the other six are
+ * optional bound properties. A picker the maker left empty arrives as a
+ * property with `type: null` and empty `attributes` and `security` objects
+ * (a real Accounts form, 2026-09-13), where a mapped one carries the
+ * column's metadata. This was designed believing the two were
+ * indistinguishable, on `pcf-geo-stamp`'s reading, and the rule from that
+ * reading stays because it is right either way: **emit a key only for a
+ * column the control has written**, where "written" means a pick or a clear
+ * put a value there or took one away — and never write an unmapped one at
+ * all. A column the platform handed a value and the control never touched is
+ * not in the outputs.
  *
  * The one exception is `addressLine1`, the column the control sits on, which
  * is always mapped and always emitted — `null` when cleared, through the
@@ -111,7 +112,6 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
     }
 
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        probe(context, () => this.getOutputs()); // TEMPORARY 0.0.1 — delete with probe.ts before 0.1.0
         const parameters = context.parameters;
 
         // Adopt every column the platform changed — and only a change that is
@@ -141,21 +141,35 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
         const strings = this.strings(context);
 
         /*
+         * **An unmapped picker is detectable, and this is how.** Measured on
+         * a real Accounts form, 2026-09-13: a bound property the maker left
+         * unbound arrives as `{ raw: null, type: null, attributes: {},
+         * security: {} }` — eight keys where a mapped one has fifteen — so
+         * `type === null` is the tell. The manifest comment and SPEC.md were
+         * written believing there was none; the omission rule in
+         * `getOutputs` stays because it is right either way, and this makes
+         * it exact: an unmapped column is never written and never emitted.
+         */
+        const mapped = (column: Column): boolean => parameters[column].type !== null;
+
+        /*
          * The other six columns' security is read per column and applied to
          * what the control *shows* of them — a user denied `city` sees no
          * city in the summary line — but never to the primary field: the
          * street line is its own column with its own security, and hiding
          * the whole control because a neighbour is denied is the bug
          * `pcf-date-range-picker` shipped in 0.1.x.
+         *
+         * Compared against `false`, not read as a boolean: a column with no
+         * profile arrives as `{ secured: false, editable: true, readable:
+         * true }`, an unmapped one as `{}` (both measured), and the
+         * template's rig hands over `undefined`. Only an explicit `false` is
+         * a denial.
          */
-        const readable = (column: Column): boolean => {
-            const property = parameters[column];
-
-            return property.security === undefined || property.security.readable;
-        };
+        const readable = (column: Column): boolean => parameters[column].security?.readable !== false;
 
         const secondary = (['city', 'stateOrProvince', 'postalCode', 'country'] as TextColumn[])
-            .filter((column) => readable(column))
+            .filter((column) => mapped(column) && readable(column))
             .map((column) => this.values[column])
             .filter((value): value is string => typeof value === 'string' && value !== '')
             .join(', ');
@@ -179,8 +193,8 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
             placeholder: parameters.placeholder.raw ?? '',
             minCharacters: minCharactersFrom(parameters.minCharacters.raw),
             visible: context.mode.isVisible,
-            readable: security === undefined || security.readable,
-            disabled: context.mode.isControlDisabled || (security !== undefined && !security.editable),
+            readable: security?.readable !== false,
+            disabled: context.mode.isControlDisabled || security?.editable === false,
             errorMessage: primary.error ? primary.errorMessage : null,
             label: context.mode.label,
             isRTL: context.userSettings.isRTL,
@@ -204,11 +218,19 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
                 this.notifyOutputChanged();
             },
             onPick: (picked: Suggestion): Promise<Fault | null> => {
-                this.write('addressLine1', picked.addressLine || picked.formattedAddress);
-                this.write('city', picked.city || null);
-                this.write('stateOrProvince', (regionFormat === 'long' ? picked.regionLong : picked.regionShort) || null);
-                this.write('postalCode', picked.postalCode || null);
-                this.write('country', (countryFormat === 'iso' ? picked.countryIso : picked.countryName) || null);
+                /*
+                 * The street is the street, or nothing. A pick of a town —
+                 * measured: "Tlaltenango de Sánchez Román, Zacatecas, México"
+                 * — has no `addressLine`, and writing the formatted address
+                 * into the street column put the city into the street and
+                 * again into City. An empty street beside a filled city is
+                 * what the record actually knows.
+                 */
+                this.write('addressLine1', picked.addressLine || null);
+                this.writeMapped('city', picked.city || null, mapped);
+                this.writeMapped('stateOrProvince', (regionFormat === 'long' ? picked.regionLong : picked.regionShort) || null, mapped);
+                this.writeMapped('postalCode', picked.postalCode || null, mapped);
+                this.writeMapped('country', (countryFormat === 'iso' ? picked.countryIso : picked.countryName) || null, mapped);
                 this.formattedAddress = picked.formattedAddress;
 
                 /*
@@ -224,7 +246,7 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
                 if (resolveCoordinates) {
                     (['latitude', 'longitude'] as CoordinateColumn[]).forEach((column) => {
                         if (this.values[column] !== null) {
-                            this.write(column, null);
+                            this.writeMapped(column, null, mapped);
                         }
                     });
                 }
@@ -253,8 +275,8 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
                             return { kind: 'service', status: null } as Fault;
                         }
 
-                        this.write('latitude', position.latitude);
-                        this.write('longitude', position.longitude);
+                        this.writeMapped('latitude', position.latitude, mapped);
+                        this.writeMapped('longitude', position.longitude, mapped);
                         this.notifyOutputChanged();
 
                         return null;
@@ -270,7 +292,7 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
                 // cleared, becomes a column this control writes.
                 (Object.keys(this.values) as Column[]).forEach((column) => {
                     if (this.values[column] !== null) {
-                        this.write(column, null);
+                        this.writeMapped(column, null, mapped);
                     }
                 });
                 this.write('addressLine1', null);
@@ -315,6 +337,13 @@ export class AddressAutocompleteAzure implements ComponentFramework.ReactControl
     public destroy(): void {
         // React unmounts the component, whose effect cleanup aborts any
         // request in flight and clears the debounce timer.
+    }
+
+    /** `write`, unless the maker never mapped the column — then nothing, not even a key. */
+    private writeMapped(column: Column, value: string | number | null, mapped: (column: Column) => boolean): void {
+        if (mapped(column)) {
+            this.write(column, value);
+        }
     }
 
     private write(column: Column, value: string | number | null): void {

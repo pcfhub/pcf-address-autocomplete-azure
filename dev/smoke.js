@@ -701,6 +701,45 @@ async function pickChecks() {
 
     await partial.props().onPick(raffles);
 
+    /*
+     * **An unmapped picker is detectable** — `type: null`, `security: {}`,
+     * measured — so a column the maker never bound is never written and never
+     * emitted, whatever the pick carries. And its `security: {}` must not
+     * read as "denied": only an explicit `false` is.
+     */
+    const partialForm = mount({ unbound: ['country', 'postalCode'], columns: { city: 'Old town' } });
+    const [ms] = await partialForm.props().suggest('1 microsoft way', signal);
+
+    await partialForm.props().onPick(ms);
+
+    check(
+        'a column the maker never mapped is neither written nor emitted, and its neighbours are',
+        !('country' in partialForm.outputs()) && !('postalCode' in partialForm.outputs())
+            && partialForm.outputs().city === 'Redmond'
+            && partialForm.outputs().stateOrProvince === 'WA',
+        JSON.stringify(partialForm.outputs()),
+    );
+
+    partialForm.props().onClear();
+
+    check(
+        'and Clear does not emit it either',
+        !('country' in partialForm.outputs()) && partialForm.outputs().city === null,
+        JSON.stringify(partialForm.outputs()),
+    );
+
+    const [town] = await partialForm.props().suggest('zacatecas', signal);
+
+    await partialForm.props().onPick(town);
+
+    check(
+        'a pick with no street line leaves the street empty rather than writing the whole address into it',
+        partialForm.outputs().addressLine1 === null
+            && partialForm.outputs().city === 'Tlaltenango de Sánchez Román'
+            && partialForm.outputs().formattedAddress === 'Tlaltenango de Sánchez Román, Zacatecas, México',
+        JSON.stringify(partialForm.outputs()),
+    );
+
     check(
         'a pick with no region writes null to the region column rather than leaving the old value',
         partial.outputs().stateOrProvince === null

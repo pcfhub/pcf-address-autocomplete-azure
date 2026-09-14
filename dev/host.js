@@ -233,6 +233,9 @@
         },
         columnSecurity: {},
 
+        /** Optional bound columns the maker never mapped — see `column()`. */
+        unbound: [],
+
         /**
          * What the Azure Maps stand-in does with a request. `status` is what
          * the service answers — 200 with the fixture's matches, 401 for a
@@ -824,6 +827,25 @@
          * `attributes` only where the host has metadata, as for the primary.
          */
         function column(name, type) {
+            /*
+             * A picker the maker left empty, as the platform hands it over —
+             * measured 2026-09-13: eight keys, `type: null`, `attributes: {}`,
+             * `security: {}`. Not `undefined`, and not a fifteen-key property
+             * with `raw: null`; `type === null` is what tells the two apart.
+             */
+            if ((o.unbound || []).indexOf(name) !== -1) {
+                return {
+                    type: null,
+                    raw: null,
+                    formatted: undefined,
+                    attributes: {},
+                    error: false,
+                    errorMessage: undefined,
+                    security: {},
+                    isPropertyLoading: false,
+                };
+            }
+
             return {
                 raw: o.columns[name] === undefined ? null : o.columns[name],
                 security: SECURITY[o.columnSecurity[name] || 'none'],

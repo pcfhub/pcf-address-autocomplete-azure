@@ -27,11 +27,10 @@ Load-bearing, in the order a probe should ask them:
 
 1. **Do the six optional bound columns persist on save when only the street
    column is on the form?** The design assumes a bound property writes to
-   its column whether or not another control on the form shows it. *Open.*
-   The probe form had all six bound and the pick wrote all six — the
-   street, city, region, postal code and country in one pass and the two
-   coordinates on the next — but whether those columns were also placed on
-   the form was not recorded.
+   its column whether or not another control on the form shows it.
+   *Measured: yes.* With City removed from the form and still bound, a pick
+   wrote it and a Web API read-back after Save carried it. The six need
+   binding, not placing.
 2. **What does an unmapped optional bound property look like in
    `context.parameters`** — present with `raw: null`? `attributes`
    undefined? — and **does emitting `null` for it throw, no-op, or write?**
@@ -41,11 +40,20 @@ Load-bearing, in the order a probe should ask them:
    `errorCode`, `notifications`, `security`, `isPropertyLoading`,
    `predicted`, `predictionCitation`, `citationData`, `isMasked`,
    `isControlLoading` — with `latitude` and `longitude` at `raw: null`,
-   `type: 'FP'`. All seven were *mapped*; an unmapped one has not been looked
-   at, so the omission rule in `getOutputs` stays.
+   `type: 'FP'`. Then, on the 0.0.2 run with Country unbound: **an
+   unmapped picker arrives as `{ raw: null, type: null, formatted, attributes:
+   {}, error: false, errorMessage, security: {}, isPropertyLoading }`** —
+   eight keys, `type` null, empty objects where a mapped column has
+   metadata and a security profile. So the two *are* distinguishable, by
+   `type === null`, and the control now uses it: an unmapped column is never
+   written and never emitted, exactly rather than by the omission rule
+   alone. Whether emitting `null` for one would have thrown is moot.
 3. **Does `null` on a mapped, previously-empty column clear or no-op?** The
    control emits `null` only for a column it has written; a pick that lands
-   a `null` (no region) on an empty column is the case. *Open.*
+   a `null` (no region) on an empty column is the case. *Measured: it
+   clears.* The 0.0.1 pick wrote postal code `45200`; the next pick, a town
+   with no postal code, emitted `null` for it, and the 0.0.2 first pass
+   read the column back as `raw: null`.
 4. **Does the browser's CORS preflight from `https://<org>.crm.dynamics.com`
    pass** with the account's default CORS (all origins) and with the key in a
    header rather than the URL? *Measured: yes.* Every request was a 204
@@ -144,8 +152,19 @@ that.
   reproduces the measured sequence, and the assertion fails without the fix.
 - **`security` is an object on a column with no profile** — `{ secured:
   false, editable: true, readable: true }` on every one of the seven, where
-  the template's rig models `undefined`. Both shapes are hosts now: the rig
-  has `security: 'unsecured'` and the suite asserts it reads as writable.
+  the template's rig models `undefined` — **and `{}` on an unmapped one.**
+  The scaffold's `security === undefined || security.readable` reads `{}` as
+  *denied*, which is a latent bug in every control built from it that binds
+  an optional column. The reads are `security?.readable !== false` and
+  `security?.editable === false` now: only an explicit `false` is a denial.
+  The rig has `security: 'unsecured'` and `unbound: [...]`, and the suite
+  asserts both.
+- **A pick of a town wrote the town into the street.** Measured: a
+  locality-level suggestion has no `addressLine`, and the fallback to
+  `formattedAddress` put "Tlaltenango de Sánchez Román, Zacatecas, México"
+  into `address1_line1` beside the same town in City. The street is the
+  street or nothing now; the field shows empty after such a pick and the
+  line under it carries the rest.
 - **Non-US `adminDistricts` carry `name` only.** A Mexican address arrived
   as `[{ name: 'México' }, { name: 'Zumpango' }]` with no `shortName`; the
   parser's fall-through wrote the name under the short format, which is

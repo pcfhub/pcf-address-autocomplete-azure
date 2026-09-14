@@ -30,10 +30,10 @@ Three decisions worth knowing before questioning them:
 - **Seven bound properties.** Each part of the address is a bound column
   rather than an output, so a pick lands in the record and survives a reload
   without a form script copying values around. The cost is seven column
-  pickers in the properties pane; only the street is required. From inside a
-  control an unmapped optional column reads exactly like a mapped-but-empty
-  one, so `getOutputs()` emits a key only for a column the control has written
-  or cleared — never a bare `null` for one it has never touched.
+  pickers in the properties pane; only the street is required, and a bound
+  column need not be on the form to persist (measured). An unmapped picker
+  arrives with `type: null` — measured — so it is never written or emitted;
+  a mapped one is emitted only once the control has written or cleared it.
 - **The key is a maker input, sent in a header.** Azure Maps' shared key is
   entered once on the control's properties, is readable by anyone who can open
   the form designer, and travels in the `subscription-key` header — never in
@@ -41,9 +41,9 @@ Three decisions worth knowing before questioning them:
   and restrict that account's CORS allowed-origins to the organisation URL,
   which is Azure's own guidance for a key a browser holds.
 - **Coordinates are a switch, not a guess.** Autocomplete returns no position,
-  so latitude and longitude cost a second `geocode` call per pick. Whether the
-  maker bound those columns is not visible to the control, so **Fill latitude
-  and longitude** is an explicit input, off by default; on, a pick clears the
+  so latitude and longitude cost a second `geocode` call per pick — a cost
+  the maker should choose rather than inherit from binding a column — so
+  **Fill latitude and longitude** is an explicit input, off by default; on, a pick clears the
   old coordinates with the old address and fills the new ones when Azure Maps
   answers.
 
