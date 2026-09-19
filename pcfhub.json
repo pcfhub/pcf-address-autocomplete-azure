@@ -5,6 +5,7 @@
   "name": "Address Autocomplete (Azure Maps)",
   "tagline": "Type an address, pick a suggestion, and every address column fills in — through Azure Maps.",
   "category": "pickers",
+  "hosts": ["canvas", "model-driven"],
   "tags": ["address", "azure-maps", "autocomplete", "geocoding", "premium"],
 
   "control": {
