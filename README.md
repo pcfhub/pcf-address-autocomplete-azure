@@ -86,9 +86,15 @@ control with the key left empty: it explains itself under the field, accepts
 typing into the street column, and makes no request. The screenshots carry the
 list, a pick and a refusal, captured from `dev/harness.html` against the rig's
 stand-in for Azure Maps. Everything that never leaves the browser is real in the
-demo — typing, Clear, the line under the field, and the disabled, hidden,
-no-access and business-rule-error states. Two presets: the unconfigured
-control, and an address already on the record.
+demo — typing, Clear and the line under the field.
+
+So is the form around the control. Seven presets: the unconfigured control, an
+address already on the record, and five that put that address on a different
+form — read-only, no access to the street, City secured (the line under the
+field leaves it out), a business rule's error, and a field a rule has hidden.
+They set the state through the preset's `state` in `pcfhub.json`, which the
+hub's harness hands over the way a form does: `context.mode` for read-only and
+hidden, each column's `security` and `errorMessage` for the rest.
 
 ## Install
 
