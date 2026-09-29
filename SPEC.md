@@ -16,6 +16,44 @@ template audit: Bing Maps for Enterprise has closed its free tier and every
 Bing-based address control on pcf.gallery is orphaned, and PCFHub had
 nothing under "address" or "azure maps".
 
+## Demo
+
+`mocked` since 2026-09-29. It was `limited` before, because suggesting needs
+Azure Maps and the demo has neither a key nor a network route to it.
+pcfhub/pcfhub#62 let a fixture carry a `services` section: canned answers for
+a host the control declares in `external-service-usage`. `demo/maps.json` is
+that section, built from `dev/fixture.js` in the feature shapes `dev/host.js`
+answers with. The new default preset, *Searching*, sets a placeholder key and
+`resolveCoordinates`, so the control makes both calls and the fixture answers
+both.
+
+The rig's stand-in answers the rows whose formatted address *contains* the
+query. The harness cannot compute that, so each entry is keyed on the full
+text of the rows it returns, and the harness matches when the typed query and
+that text overlap either way. Entries are tried in order:
+1. *Redmond, WA 98052, United States*, so `redmond` returns all three Redmond
+   rows;
+2. the two Microsoft rows;
+3. one entry per remaining row;
+4. an empty collection.
+
+`geocode` has one entry per placeable row, keyed on its formatted address,
+and falls through to an empty collection; that is what *10 Unmapped Lane*
+gets. One imprecision follows: `way` returns both Microsoft rows, where the
+rig returns only *1 Microsoft Way*.
+
+Checked with 0.1.0's published bundle against that harness before the push:
+- `1 mic` listed both Microsoft rows.
+- Picking *1 Microsoft Way* wrote the street, city, `WA`, `98052` and *United
+  States*, then latitude 47.64203 and longitude -122.13707.
+- `zzzz` said *No addresses match*.
+- *10 Unmapped Lane* said *The address was saved, but Azure Maps returned no
+  coordinates for it.*
+
+The harness logged every call as canned. With `atlas.microsoft.com` left out
+of the declared domains, it used none of the fifteen answers and said so in
+one line.
+
 ## Not verified
 
 The shapes below were from Microsoft Learn (read 2026-09-13) and from a rig

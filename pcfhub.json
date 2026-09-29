@@ -37,17 +37,30 @@
   },
 
   "demo": {
-    "fidelity": "limited",
+    "fidelity": "mocked",
     "bundle": "out/controls/AddressAutocompleteAzure/bundle.js",
     "styles": [
       "out/controls/AddressAutocompleteAzure/css/AddressAutocompleteAzure.css"
     ],
+    "datasetFixture": "demo/maps.json",
     "limitations": [
-      "No suggestions appear here, and that is the whole feature. Suggesting means calling Azure Maps with a subscription key, and the demo has no key to hold and no account to bill — so the control is shown with the key left empty, which is exactly what it does on a form where the key is missing: it says so under the field, accepts typing into the street column, and makes no request. Screenshots above show the list, a pick and a refusal, captured from the dev rig in this repository against a stand-in for Azure Maps.",
-      "Every state that never leaves the browser is real here: typing writes the street column, Clear empties it and reports the clear, and the other columns show under the field when the preset fills them. So is the form around the control — a preset each for a read-only form, no access to the street, one secured column, a business rule’s error and a hidden field, set the way the platform hands them over: context.mode for the first and last, each column’s security and errorMessage for the rest.",
+      "The suggestions are canned, not Azure Maps’. The demo has no key to hold and no account to bill, so the Searching preset carries a placeholder key and the demo answers the control’s own two requests — geocode:autocomplete on each settled keystroke, geocode on a pick — from sample responses in demo/maps.json: the addresses this repository’s dev rig uses. Type part of one — 1 mic, redmond, raffles, rivoli, tlaltenango, unmapped — and the list appears; anything else gets No addresses match, which is what Azure Maps says when it has nothing. The event log names each call as canned, and nothing leaves the browser.",
+      "What the control does with an answer is real: the list and its keyboard handling, a pick filling the street, city, state, postal code and country, the second call for coordinates filling latitude and longitude, and the notice when Azure Maps cannot place an address (pick 10 Unmapped Lane). A refused key, a site the account’s CORS rule does not allow and rate limiting are not demoed; the screenshots above show them, captured from the dev rig.",
+      "Every state that never leaves the browser is real here too: typing writes the street column, Clear empties it and reports the clear, and the other columns show under the field when the preset fills them. So is the form around the control — a preset each for a read-only form, no access to the street, one secured column, a business rule’s error and a hidden field, set the way the platform hands them over: context.mode for the first and last, each column’s security and errorMessage for the rest. Those presets, and No key yet, leave the key empty, so the control makes no request — as it does on a form where the key is missing.",
       "This is a premium control. The manifest declares external-service-usage for atlas.microsoft.com and its geographic and Government endpoints, so an app containing it needs Power Apps licences for its users. The demo does not change that and cannot show it."
     ],
     "presets": [
+      {
+        "slug": "searching",
+        "name": "Searching",
+        "description": "Type part of an address — 1 mic, raffles, rivoli — and pick a suggestion: the street, city, state, postal code and country fill in, then the coordinates. The answers are canned sample responses, not Azure Maps.",
+        "props": {
+          "addressLine1": "",
+          "subscriptionKey": "demo-placeholder-key",
+          "resolveCoordinates": true
+        },
+        "isDefault": true
+      },
       {
         "slug": "unconfigured",
         "name": "No key yet",

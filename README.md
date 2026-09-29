@@ -80,16 +80,25 @@ for no permission at install beyond the premium consequence.
 
 ## On the hub
 
-`demo.fidelity` is **limited**, and the limit is the feature. Suggesting means
-calling Azure Maps with a key the demo does not have, so the hub shows the
-control with the key left empty: it explains itself under the field, accepts
-typing into the street column, and makes no request. The screenshots carry the
-list, a pick and a refusal, captured from `dev/harness.html` against the rig's
-stand-in for Azure Maps. Everything that never leaves the browser is real in the
-demo — typing, Clear and the line under the field.
+`demo.fidelity` is **mocked**: the list, a pick and the coordinates all work in
+the demo, against canned answers rather than Azure Maps.
 
-So is the form around the control. Seven presets: the unconfigured control, an
-address already on the record, and five that put that address on a different
+- **Searching**, the default preset, carries a placeholder key, and the hub's
+  harness answers the control's two requests from `demo/maps.json`, a
+  `services` section of sample responses (pcfhub/pcfhub#62): the addresses
+  `dev/fixture.js` holds, in the shapes `dev/host.js` answers with. Type part of
+  one — `1 mic`, `redmond`, `raffles`, `rivoli` — and pick it. The harness
+  answers only a host this control declares in `external-service-usage`, and
+  logs each call as canned; nothing leaves the browser.
+- `10 Unmapped Lane` geocodes to nothing, so it shows the notice for an
+  address Azure Maps cannot place. A refused key, a CORS refusal and rate
+  limiting are not demoed; the screenshots carry them, captured from
+  `dev/harness.html`.
+
+Everything that never leaves the browser is real in the demo too — typing,
+Clear and the line under the field — and so is the form around the control.
+Seven more presets: the unconfigured control, an address already on the
+record, and five that put that address on a different
 form — read-only, no access to the street, City secured (the line under the
 field leaves it out), a business rule's error, and a field a rule has hidden.
 They set the state through the preset's `state` in `pcfhub.json`, which the

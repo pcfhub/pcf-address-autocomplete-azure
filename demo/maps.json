@@ -1,0 +1,611 @@
+{
+    "services": [
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "Redmond, WA 98052, United States"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "1 Microsoft Way",
+                                "streetNumber": "1",
+                                "streetName": "Microsoft Way",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "1 Microsoft Way, Redmond, WA 98052, United States"
+                            }
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "1 Microsoft West Campus Rd",
+                                "streetNumber": "1",
+                                "streetName": "Microsoft West Campus Rd",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "1 Microsoft West Campus Rd, Redmond, WA 98052, United States"
+                            }
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "15127 NE 24th St",
+                                "streetNumber": "15127",
+                                "streetName": "NE 24th St",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "15127 NE 24th St, Redmond, WA 98052, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "1 Microsoft Way, Redmond, WA 98052, United States · 1 Microsoft West Campus Rd, Redmond, WA 98052, United States"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "1 Microsoft Way",
+                                "streetNumber": "1",
+                                "streetName": "Microsoft Way",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "1 Microsoft Way, Redmond, WA 98052, United States"
+                            }
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "1 Microsoft West Campus Rd",
+                                "streetNumber": "1",
+                                "streetName": "Microsoft West Campus Rd",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "1 Microsoft West Campus Rd, Redmond, WA 98052, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "15127 NE 24th St, Redmond, WA 98052, United States"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "15127 NE 24th St",
+                                "streetNumber": "15127",
+                                "streetName": "NE 24th St",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "15127 NE 24th St, Redmond, WA 98052, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "1 Raffles Place, Singapore 048616"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "1 Raffles Place",
+                                "streetNumber": "1",
+                                "streetName": "Raffles Place",
+                                "locality": "Singapore",
+                                "adminDistricts": [],
+                                "postalCode": "048616",
+                                "countryRegion": {
+                                    "ISO": "SG",
+                                    "name": "Singapore"
+                                },
+                                "formattedAddress": "1 Raffles Place, Singapore 048616"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "Rue de Rivoli, Paris, Île-de-France, France"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "Rue de Rivoli",
+                                "streetNumber": "",
+                                "streetName": "Rue de Rivoli",
+                                "locality": "Paris",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Île-de-France",
+                                        "shortName": "IDF"
+                                    }
+                                ],
+                                "postalCode": "",
+                                "countryRegion": {
+                                    "ISO": "FR",
+                                    "name": "France"
+                                },
+                                "formattedAddress": "Rue de Rivoli, Paris, Île-de-France, France"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "Tlaltenango de Sánchez Román, Zacatecas, México"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "",
+                                "streetNumber": "",
+                                "streetName": "",
+                                "locality": "Tlaltenango de Sánchez Román",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Zacatecas",
+                                        "shortName": ""
+                                    }
+                                ],
+                                "postalCode": "",
+                                "countryRegion": {
+                                    "ISO": "MX",
+                                    "name": "México"
+                                },
+                                "formattedAddress": "Tlaltenango de Sánchez Román, Zacatecas, México"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "query": {
+                "query": "10 Unmapped Lane, Nowhere, OH 43000, United States"
+            },
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": null,
+                        "properties": {
+                            "typeGroup": "Address",
+                            "type": "Address",
+                            "address": {
+                                "addressLine": "10 Unmapped Lane",
+                                "streetNumber": "10",
+                                "streetName": "Unmapped Lane",
+                                "locality": "Nowhere",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Ohio",
+                                        "shortName": "OH"
+                                    }
+                                ],
+                                "postalCode": "43000",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "10 Unmapped Lane, Nowhere, OH 43000, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode:autocomplete",
+            "delayMs": 250,
+            "body": {
+                "type": "FeatureCollection",
+                "features": []
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "query": {
+                "query": "1 Microsoft Way, Redmond, WA 98052, United States"
+            },
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -122.13707,
+                                47.64203
+                            ]
+                        },
+                        "properties": {
+                            "type": "Address",
+                            "confidence": "High",
+                            "address": {
+                                "addressLine": "1 Microsoft Way",
+                                "streetNumber": "1",
+                                "streetName": "Microsoft Way",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "1 Microsoft Way, Redmond, WA 98052, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "query": {
+                "query": "1 Microsoft West Campus Rd, Redmond, WA 98052, United States"
+            },
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -122.14155,
+                                47.64409
+                            ]
+                        },
+                        "properties": {
+                            "type": "Address",
+                            "confidence": "High",
+                            "address": {
+                                "addressLine": "1 Microsoft West Campus Rd",
+                                "streetNumber": "1",
+                                "streetName": "Microsoft West Campus Rd",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "1 Microsoft West Campus Rd, Redmond, WA 98052, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "query": {
+                "query": "15127 NE 24th St, Redmond, WA 98052, United States"
+            },
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -122.14049,
+                                47.63177
+                            ]
+                        },
+                        "properties": {
+                            "type": "Address",
+                            "confidence": "High",
+                            "address": {
+                                "addressLine": "15127 NE 24th St",
+                                "streetNumber": "15127",
+                                "streetName": "NE 24th St",
+                                "locality": "Redmond",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Washington",
+                                        "shortName": "WA"
+                                    }
+                                ],
+                                "postalCode": "98052",
+                                "countryRegion": {
+                                    "ISO": "US",
+                                    "name": "United States"
+                                },
+                                "formattedAddress": "15127 NE 24th St, Redmond, WA 98052, United States"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "query": {
+                "query": "1 Raffles Place, Singapore 048616"
+            },
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                103.85128,
+                                1.28406
+                            ]
+                        },
+                        "properties": {
+                            "type": "Address",
+                            "confidence": "High",
+                            "address": {
+                                "addressLine": "1 Raffles Place",
+                                "streetNumber": "1",
+                                "streetName": "Raffles Place",
+                                "locality": "Singapore",
+                                "adminDistricts": [],
+                                "postalCode": "048616",
+                                "countryRegion": {
+                                    "ISO": "SG",
+                                    "name": "Singapore"
+                                },
+                                "formattedAddress": "1 Raffles Place, Singapore 048616"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "query": {
+                "query": "Rue de Rivoli, Paris, Île-de-France, France"
+            },
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                2.3376,
+                                48.8606
+                            ]
+                        },
+                        "properties": {
+                            "type": "Address",
+                            "confidence": "High",
+                            "address": {
+                                "addressLine": "Rue de Rivoli",
+                                "streetNumber": "",
+                                "streetName": "Rue de Rivoli",
+                                "locality": "Paris",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Île-de-France",
+                                        "shortName": "IDF"
+                                    }
+                                ],
+                                "postalCode": "",
+                                "countryRegion": {
+                                    "ISO": "FR",
+                                    "name": "France"
+                                },
+                                "formattedAddress": "Rue de Rivoli, Paris, Île-de-France, France"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "query": {
+                "query": "Tlaltenango de Sánchez Román, Zacatecas, México"
+            },
+            "body": {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Point",
+                            "coordinates": [
+                                -103.30577,
+                                21.78242
+                            ]
+                        },
+                        "properties": {
+                            "type": "Address",
+                            "confidence": "High",
+                            "address": {
+                                "addressLine": "",
+                                "streetNumber": "",
+                                "streetName": "",
+                                "locality": "Tlaltenango de Sánchez Román",
+                                "adminDistricts": [
+                                    {
+                                        "name": "Zacatecas",
+                                        "shortName": ""
+                                    }
+                                ],
+                                "postalCode": "",
+                                "countryRegion": {
+                                    "ISO": "MX",
+                                    "name": "México"
+                                },
+                                "formattedAddress": "Tlaltenango de Sánchez Román, Zacatecas, México"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "url": "https://atlas.microsoft.com/geocode",
+            "body": {
+                "type": "FeatureCollection",
+                "features": []
+            }
+        }
+    ]
+}
