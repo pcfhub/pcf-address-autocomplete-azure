@@ -4,6 +4,7 @@
   "slug": "pcf-address-autocomplete-azure",
   "name": "Address Autocomplete (Azure Maps)",
   "tagline": "Type an address, pick a suggestion, and every address column fills in — through Azure Maps.",
+  "summary": "Place it on a street column and bind the city, state or province, postal code and country, and optionally latitude and longitude. After three typed characters Azure Maps suggests addresses, and picking one writes every bound column at once.\n\n- Built on Azure Maps, Microsoft's replacement for Bing Maps, which is being retired\n- Each part of the address lands in its own column, with no form script copying values\n- Follows the form's Fluent theme, including dark and high contrast\n\nYou need an Azure Maps account and its subscription key.",
   "category": "pickers",
   "hosts": ["canvas", "model-driven"],
   "tags": ["address", "azure-maps", "autocomplete", "geocoding", "premium"],
