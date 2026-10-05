@@ -8,6 +8,8 @@
   "category": "pickers",
   "hosts": ["canvas", "model-driven"],
   "tags": ["address", "azure-maps", "autocomplete", "geocoding", "premium"],
+  "supportLevel": "reference",
+  "builtWith": "ai",
 
   "control": {
     "namespace": "PCFHub",
