@@ -7,6 +7,7 @@ import {
     webLightTheme,
 } from '@fluentui/react-components';
 import { Fault, isFault, Suggestion } from '../azureMaps';
+import { useCloseWhenHidden } from '../lib/close-when-hidden/useCloseWhenHidden';
 
 export interface IStrings {
     fallbackLabel: string;
@@ -171,6 +172,11 @@ export function AddressAutocompleteAzureControl(props: IProps): React.ReactEleme
      */
     const echo = React.useRef<string | null>(null);
     const canSuggest = props.suggest !== null;
+
+    // Close the suggestions once the field scrolls out of the form: the
+    // listbox is portalled and follows the field up over the form's header
+    // (lib/close-when-hidden/watch.ts). What was typed stays.
+    useCloseWhenHidden(fieldEl, open, () => setOpen(false));
 
     // Resync when the platform hands down a genuinely different street line
     // — not the one this component just wrote — so a form-driven change

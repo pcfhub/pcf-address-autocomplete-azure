@@ -54,6 +54,20 @@ The harness logged every call as canned. With `atlas.microsoft.com` left out
 of the declared domains, it used none of the fifteen answers and said so in
 one line.
 
+## 0.1.1: a list left open over the header
+
+pcf-lookup-search 0.3.0 was reported with its suggestion list riding up over
+the form's header after the form scrolled: Fluent portals the listbox to the
+page and keeps it on the field wherever the field goes (measured there,
+2026-10-13). This control's list is the same Fluent Combobox, placed against
+the field the same way. 0.1.1 closes it when less than half the field is
+visible, through the shared `lib/close-when-hidden`; what was typed stays,
+and a click on the field opens it again.
+
+**Not walked on this control.** `address1_line1` on the test form is a plain
+text box again, and the fix is the call Lookup Search 0.3.1 walked on the
+form, behind the same kind of field.
+
 ## Not verified
 
 The shapes below were from Microsoft Learn (read 2026-09-13) and from a rig
